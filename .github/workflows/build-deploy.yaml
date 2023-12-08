@@ -27,7 +27,7 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify -DskipTests
-      - run: mkdir staging && cp web/target/*.jar staging
+      - run: mkdir staging && cp target/*.jar staging
       - run: cp Dockerfile staging
       - uses: actions/upload-artifact@v3
         with:
