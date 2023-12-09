@@ -1,7 +1,13 @@
+logging:
+  level:
+    root: debug
+
 spring:
   application:
     name: api-gateway
 management:
+  server:
+    port: 8081
   endpoints:
     web:
       exposure:
