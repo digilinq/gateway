@@ -17,6 +17,4 @@ spring:
   config:
     activate:
       on-profile: prd
-  cloud:
-    config:
-      uri: http://config-server:8080
+    import: configserver:http://localhost:8080
