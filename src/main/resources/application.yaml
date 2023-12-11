@@ -12,3 +12,11 @@ management:
     web:
       exposure:
         include: "health,info,metrics,httptrace"
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+  cloud:
+    config:
+      uri: http://config-server:8080
