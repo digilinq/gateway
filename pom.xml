@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>com.eightbits.infratructure</groupId>
-    <artifactId>gateway</artifactId>
+    <artifactId>api-gateway</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <name>Spring Cloud Api Gateway</name>
@@ -73,7 +73,15 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -108,9 +116,16 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -142,11 +157,6 @@
                         <skipTests>${skipTests}</skipTests>
                         <useSystemClassLoader>false</useSystemClassLoader>
                         <perCoreThreadCount>false</perCoreThreadCount>
-                        <!--
-                            NOTE: when using forkCount with Toolchains, make sure to run Maven on the latest JDK.
-                            Keep the behaviour the same as it was with surefire 2.22.2 with forkMode
-                            https://web.archive.org/web/20190612023335/http://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html#Migrating_the_Deprecated_forkMode_Parameter_to_forkCount_and_reuseForks
-                         -->
                         <forkCount>1</forkCount>
                         <reuseForks>true</reuseForks>
                         <threadCount>8</threadCount>
@@ -154,7 +164,6 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <!-- For integration tests, JUnit categories are decided by the active profiles -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>

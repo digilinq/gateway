@@ -2,7 +2,19 @@ spring:
   application:
     name: api-gateway
 management:
+  server:
+    port: 8081
   endpoints:
     web:
       exposure:
         include: "health,info,metrics,httptrace"
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+    import: configserver:http://config-server:8080
+
+logging:
+  level:
+    root: info
