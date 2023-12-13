@@ -15,6 +15,11 @@ spring:
       on-profile: prd
     import: configserver:http://config-server:8080
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-discovery-service:8761/eureka/
+
 logging:
   level:
-    root: info
+    root: debug
