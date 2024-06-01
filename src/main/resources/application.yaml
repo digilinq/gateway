@@ -23,3 +23,9 @@ eureka:
 logging:
   level:
     root: debug
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: trace
+    org.springframework.web.reactive: trace
+    org.springframework.boot.autoconfigure.web: trace
+    reactor.netty: trace
+    redisratelimiter: trace
