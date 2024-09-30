@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Print config
         run: |
-          echo ${{ needs.config.outputs.deployment }}
+          echo ${{ fromJson(needs.config.outputs.deployment).namespace }}
 
   build:
     name: build
