@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: docker.io/digilinq/api-gateway
+          image: docker.io/lazycomputing/api-gateway
           envFrom:
             - configMapRef:
                 name: api-gateway
