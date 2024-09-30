@@ -70,7 +70,7 @@ jobs:
       runner: 'ubuntu-latest'
       ref: ${{ github.ref }}
       image: ${{ needs.create-docker-image.outputs.docker-image }}
-      namespace: ${{ fromJSON(needs.config.outputs.deployment-json-object).namespace }}
+      namespace: ${{ fromJSON(needs.config.outputs.deployment).namespace }}
     secrets:
       kubernetes-url: ${{ secrets.KUBERNETES_URL }}
       kubernetes-secret: ${{ secrets.KUBERNETES_SECRET }}
