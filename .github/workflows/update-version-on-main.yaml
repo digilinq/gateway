@@ -73,6 +73,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"     
 
+      - name: Show current branch
+        run: |
+          git branch --show-current
+          echo "Current branch: ${{ github.ref_name }}"
+
       - name: Create version update branch
         id: create_branch
         run: |          
