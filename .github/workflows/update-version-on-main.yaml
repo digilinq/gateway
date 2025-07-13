@@ -3,7 +3,7 @@ name: Update Version on Main
 on:
   push:
     branches:
-      - main
+      - '**'
 
 permissions:
   contents: write
@@ -17,6 +17,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if this is a version bump commit
+        run: |
+          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+          if [[ "$COMMIT_MESSAGE" == *"bump version to"* ]]; then
+            echo "This is a version bump commit, skipping workflow"
+            exit 0
+          fi
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -79,12 +87,17 @@ jobs:
           
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
+      - name: Print current branch
+        run: |
+          echo "Current branch: ${{ github.ref_name }}"
+          echo "Branch created: ${{ steps.create_branch.outputs.branch_name }}"
+
       - name: Create Pull Request
         id: create_pr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
+          base: ${{ github.ref_name }}
           branch: ${{ steps.create_branch.outputs.branch_name }}
           title: "chore: bump version to ${{ steps.next_version.outputs.next_version }}"
           body: |
