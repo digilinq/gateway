@@ -24,6 +24,7 @@ jobs:
         id: mvn_version
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=${VERSION%-SNAPSHOT}
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create annotated tag
