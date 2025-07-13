@@ -1,0 +1,37 @@
+name: Beta version tag
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  tag-feature-branch:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.create_tag.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Get Maven version
+        id: mvn_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create annotated tag
+        id: create_tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch --tags
+          git tag -a "v${{ steps.mvn_version.outputs.version }}" -m "Beta version ${{ steps.mvn_version.outputs.version }}"
+          git push origin "v${{ steps.mvn_version.outputs.version }}"
+          echo "tag=v${{ steps.mvn_version.outputs.version }}" >> $GITHUB_OUTPUT
