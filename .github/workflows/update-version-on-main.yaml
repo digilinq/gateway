@@ -83,7 +83,7 @@ jobs:
         run: |          
           # Create and switch to new branch
           BRANCH_NAME="chore/bump-version-${{ steps.next_version.outputs.next_version }}"
-          git checkout -b "$BRANCH_NAME"
+          # git checkout -b "$BRANCH_NAME"
           
           # Commit changes
           # git add pom.xml
