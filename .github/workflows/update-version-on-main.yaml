@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+ 
 jobs:
   update-version:
     runs-on: ubuntu-latest
@@ -51,7 +55,13 @@ jobs:
           mvn versions:set -DnewVersion=${{ steps.next_version.outputs.next_version }}
           mvn versions:commit
 
+      - name: Print pom.xml version
+        run: |
+          echo "Updated pom.xml version:"
+          mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+
       - name: Create version update branch
+        id: create_branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -66,12 +76,12 @@ jobs:
           git push origin "$BRANCH_NAME"
           
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-        id: create_branch
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
           branch: ${{ steps.create_branch.outputs.branch_name }}
           title: "chore: bump version to ${{ steps.next_version.outputs.next_version }}"
           body: |
