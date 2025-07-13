@@ -81,9 +81,9 @@ jobs:
           git checkout -b "$BRANCH_NAME"
           
           # Commit changes
-          git add pom.xml
-          git commit -m "chore: bump version to ${{ steps.next_version.outputs.next_version }}"
-          git push origin "$BRANCH_NAME"
+          # git add pom.xml
+          # git commit -m "chore: bump version to ${{ steps.next_version.outputs.next_version }}"
+          # git push origin "$BRANCH_NAME"
           
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
