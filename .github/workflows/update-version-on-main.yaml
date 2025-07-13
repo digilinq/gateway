@@ -94,6 +94,7 @@ jobs:
 
       - name: Print current branch
         run: |
+          git branch --show-current
           echo "Current branch: ${{ github.ref_name }}"
           echo "Branch created: ${{ steps.create_branch.outputs.branch_name }}"
 
