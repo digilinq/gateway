@@ -2,8 +2,8 @@ name: Beta version tag
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - 'feature/*'
 
 jobs:
   tag-feature-branch:
