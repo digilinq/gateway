@@ -8,7 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
- 
+
 jobs:
   update-version:
     runs-on: ubuntu-latest
@@ -100,6 +100,8 @@ jobs:
 
       - name: Create Pull Request
         id: create_pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
